@@ -1,0 +1,40 @@
+name: lint test and build
+on: push
+jobs:
+    linttest:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Clone Code
+              uses: actions/checkout@v4
+            - name: Setup Node
+              uses: actions/setup-node@v4
+            - name: Install dependencies
+              run: npm i
+            - name: lint
+              run: npm run lint
+            - name: test
+              run: npm run test
+    build:
+        needs: linttest
+        runs-on: ubuntu-latest
+        steps:
+            - name: Clone Code
+              uses: actions/checkout@v4
+            - name: Setup Node
+              uses: actions/setup-node@v4
+            - name: Install dependencies
+              run: npm i
+            - name: test
+              run: npm run test
+    deploy:
+        needs: build
+        runs-on: ubuntu-latest
+        steps:
+            - name: Clone Code
+              uses: actions/checkout@v4
+            - name: Setup Node
+              uses: actions/setup-node@v4
+            - name: Install dependencies
+              run: npm i
+            - name: deploy
+              run: echo "Deploying ..."
